@@ -3,27 +3,17 @@
 include("cmake/dpg_sources.cmake")
 
 # For distribution
-if(MVDIST_ONLY)
 
-	add_library(core SHARED)
 
-	target_sources(core PRIVATE ${MARVEL_SOURCES} )
+add_library(core SHARED)
 
-	target_compile_definitions(core
+target_sources(core PRIVATE ${MARVEL_SOURCES} )
 
-		PRIVATE
-			$<$<CONFIG:Release>:MV_RELEASE>
-	)
+target_compile_definitions(core
 
-	if(WIN32)
-		include("cmake/windows_runner.cmake")
-	elseif(APPLE)
-		include("cmake/mac_runner.cmake")
-	else() # Linux
-		include("cmake/linux_runner.cmake")
-	endif()
+	PRIVATE
+		$<$<CONFIG:Release>:MV_RELEASE>
+)
 
-# For developing
-else()
-	include("cmake/embedded.cmake")
-endif()
+
+include("cmake/windows_runner.cmake")
